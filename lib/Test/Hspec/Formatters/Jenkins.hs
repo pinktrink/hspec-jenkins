@@ -45,14 +45,14 @@ xmlFormatter = silent {
     headerFormatter = do
       writeLine "<?xml version='1.0' encoding='UTF-8'?>"
       writeLine "<testsuite>"
-  , exampleSucceeded = \path -> do
+  , exampleSucceeded = \path _ -> do
       writeLine $ renderMarkup $
-        testcase path ""
-  , exampleFailed = \path err -> do
+        testcase path $ ""
+  , exampleFailed = \path _ reason -> do
       writeLine $ renderMarkup $
         testcase path $
-          failure ! message (either formatException id err) $ ""
-  , examplePending = \path mdesc -> do
+          failure ! message (show reason) $ ""
+  , examplePending = \path _ mdesc -> do
       writeLine $ renderMarkup $
         testcase path $
           case mdesc of
